@@ -145,6 +145,12 @@ a:hover {
     overflow: hidden;
 }
 
+.goods-view-desc {
+    line-height: 1.6;
+    color: #555;
+    white-space: pre-line;
+}
+
 /* Forms */
 form {
     background: #fff;

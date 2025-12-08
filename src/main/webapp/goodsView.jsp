@@ -25,7 +25,7 @@
     <img class="detail-image" src="<c:url value="/image/${goods.imageHash}" />"/>
     <h2><c:out value="${goods.name}"/></h2>
     <p class="goods-price<c:if test="${goods.sold}"> is-sold</c:if>">￥<c:out value="${goods.price}"/></p>
-    <p style="line-height: 1.6; color: #555;"><c:out value="${goods.description}"/></p>
+    <p class="goods-view-desc"><c:out value="${goods.description}"/></p>
 </div>
 </body>
 </html>
