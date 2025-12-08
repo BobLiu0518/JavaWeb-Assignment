@@ -16,7 +16,6 @@ public class GoodsDaoImpl implements GoodsDao {
         stmt.setBoolean(4, goods.isSold());
         stmt.setInt(5, goods.getPublisherId());
         stmt.setString(6, goods.getImageHash());
-        stmt.setString(7, goods.getImageMime());
     }
 
     public void initGoodsTable() {
@@ -31,7 +30,8 @@ public class GoodsDaoImpl implements GoodsDao {
                         publisher_id INT NOT NULL,
                         image_hash VARCHAR(255) DEFAULT NULL,
                         image_mime VARCHAR(50) DEFAULT NULL,
-                        FOREIGN KEY (publisher_id) REFERENCES users(id)
+                        FOREIGN KEY (publisher_id) REFERENCES users(id),
+                        FOREIGN KEY (image_hash) REFERENCES images(hash)
                     )
                     """).execute();
         } catch (Exception e) {
@@ -42,7 +42,7 @@ public class GoodsDaoImpl implements GoodsDao {
     public Goods getGoodsById(int id) {
         try (Connection conn = Dao.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("""
-                    SELECT id, name, description, price, is_sold, publisher_id, image_hash, image_mime FROM goods WHERE id = ?
+                    SELECT id, name, description, price, is_sold, publisher_id, image_hash FROM goods WHERE id = ?
                     """);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -55,8 +55,7 @@ public class GoodsDaoImpl implements GoodsDao {
                     rs.getBigDecimal("price"),
                     rs.getBoolean("is_sold"),
                     rs.getInt("publisher_id"),
-                    rs.getString("image_hash"),
-                    rs.getString("image_mime")
+                    rs.getString("image_hash")
             );
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -105,8 +104,7 @@ public class GoodsDaoImpl implements GoodsDao {
                         rs.getBigDecimal("price"),
                         rs.getBoolean("is_sold"),
                         rs.getInt("publisher_id"),
-                        rs.getString("image_hash"),
-                        rs.getString("image_mime")
+                        rs.getString("image_hash")
                 ));
             }
             return goodsList;
@@ -119,19 +117,19 @@ public class GoodsDaoImpl implements GoodsDao {
         try (Connection conn = Dao.getConnection()) {
             if (goods.getId() == 0) {
                 PreparedStatement stmt = conn.prepareStatement("""
-                        INSERT INTO goods (name, description, price, is_sold, publisher_id, image_hash, image_mime)
-                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                        INSERT INTO goods (name, description, price, is_sold, publisher_id, image_hash)
+                        VALUES (?, ?, ?, ?, ?, ?)
                         """);
                 setGoodsStmt(goods, stmt);
                 stmt.executeUpdate();
             } else {
                 PreparedStatement stmt = conn.prepareStatement("""
                         UPDATE goods
-                        SET name = ?, description = ?, price = ?, is_sold = ?, publisher_id = ?, image_hash = ?, image_mime = ?
+                        SET name = ?, description = ?, price = ?, is_sold = ?, publisher_id = ?, image_hash = ?
                         WHERE id = ?
                         """);
                 setGoodsStmt(goods, stmt);
-                stmt.setInt(8, goods.getId());
+                stmt.setInt(7, goods.getId());
                 stmt.executeUpdate();
             }
         } catch (Exception e) {

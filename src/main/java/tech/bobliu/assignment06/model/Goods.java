@@ -17,5 +17,4 @@ public class Goods {
     private boolean sold;
     private int publisherId;
     private String imageHash;
-    private String imageMime;
 }

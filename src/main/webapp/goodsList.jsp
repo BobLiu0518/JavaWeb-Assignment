@@ -19,7 +19,7 @@
         <c:forEach items="${goodsList}" var="goods">
             <div class="goods-card">
                 <div class="goods-image-container">
-                    <img class="goods-image" src="<c:url value="/image?hash=${goods.imageHash}&mime=${goods.imageMime}" />"/>
+                    <img class="goods-image" src="<c:url value="/image/${goods.imageHash}" />"/>
                     <c:if test="${goods.sold}">
                         <div class="sold-overlay">
                             <div class="sold-text">卖掉了~</div>
@@ -27,7 +27,8 @@
                     </c:if>
                 </div>
                 <div class="goods-info">
-                    <h2 class="goods-title"><a href="<c:url value="/goods/${goods.id}"/>"><c:out value="${goods.name}"/></a></h2>
+                    <h2 class="goods-title"><a href="<c:url value="/goods/${goods.id}"/>"><c:out
+                            value="${goods.name}"/></a></h2>
                     <p class="goods-price">￥<c:out value="${goods.price}"/></p>
                     <p class="goods-desc"><c:out value="${goods.description}"/></p>
                 </div>

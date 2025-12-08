@@ -30,8 +30,8 @@ public class GoodsService {
         goodsDao.deleteGoodsById(id);
     }
 
-    public Goods addGoods(String name, String description, BigDecimal price, int publisherId, String imageHash, String imageMime) {
-        Goods goods = new Goods(0, name, description, price, false, publisherId, imageHash, imageMime);
+    public Goods addGoods(String name, String description, BigDecimal price, int publisherId, String imageHash) {
+        Goods goods = new Goods(0, name, description, price, false, publisherId, imageHash);
         goodsDao.saveGoods(goods);
         return goods;
     }

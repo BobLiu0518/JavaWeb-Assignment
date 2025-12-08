@@ -10,6 +10,7 @@ import jakarta.servlet.http.Part;
 import tech.bobliu.assignment06.model.Goods;
 import tech.bobliu.assignment06.model.User;
 import tech.bobliu.assignment06.service.GoodsService;
+import tech.bobliu.assignment06.service.ImageService;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.util.HexFormat;
 )
 public class GoodsServlet extends HttpServlet {
     GoodsService goodsService = new GoodsService();
+    ImageService imageService = new ImageService();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
@@ -133,11 +135,14 @@ public class GoodsServlet extends HttpServlet {
             String filePath = uploadPath + File.separator + imageHash;
             filePart.write(filePath);
         }
+        if (imageHash != null && imageMime != null) {
+            imageService.saveImage(imageHash, imageMime);
+        }
 
         // POST /goods/ 保存商品信息（新增或编辑）
         Goods goods;
         if (id == 0) {
-            goods = goodsService.addGoods(name, description, price, user.getId(), imageHash, imageMime);
+            goods = goodsService.addGoods(name, description, price, user.getId(), imageHash);
         } else {
             goods = goodsService.getGoodsById(id);
             if (goods == null || goods.getPublisherId() != user.getId()) {
@@ -151,7 +156,6 @@ public class GoodsServlet extends HttpServlet {
             goods.setPrice(price);
             if (imageHash != null && imageMime != null) {
                 goods.setImageHash(imageHash);
-                goods.setImageMime(imageMime);
             }
 
             goods = goodsService.modifyGoods(goods);
