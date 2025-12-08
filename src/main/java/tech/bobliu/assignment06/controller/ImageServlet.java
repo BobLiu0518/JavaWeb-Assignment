@@ -13,6 +13,7 @@ public class ImageServlet extends HttpServlet {
     ImageService imageService = new ImageService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setHeader("Cache-Control", "public, max-age=31536000, immutable");
         String hash = request.getPathInfo().replaceAll("^/(.+)$", "$1");
         String mime = imageService.getImageMimeByHash(hash);
         File imageFile = new File(imageService.getImageFullPath(hash));
