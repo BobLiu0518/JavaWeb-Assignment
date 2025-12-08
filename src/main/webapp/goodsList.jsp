@@ -5,43 +5,57 @@
 <head>
     <meta charset="UTF-8"/>
     <title>二手交易平台</title>
+    <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
 </head>
 <body>
 <c:import url="/header.jsp"/>
-<form action="<c:url value="/goods/" />" method="GET">
-    <input name="keyword" value="<c:out value="${keyword}" />" placeholder="搜索二手商品"/>
-    <input type="submit"/>
-</form>
-<p>共找到 ${goodsCount} 个结果</p>
-<c:forEach items="${goodsList}" var="goods">
-    <div>
-        <img src="<c:url value="/image?hash=${goods.imageHash}&mime=${goods.imageMime}" />"/>
-        <h2><a href="<c:url value="/goods/${goods.id}"/>"><c:out value="${goods.name}"/></a></h2>
-        <p>￥<c:out value="${goods.price}"/></p>
-        <p><c:out value="${goods.description}"/></p>
+<div class="container">
+    <form action="<c:url value="/goods/" />" method="GET" class="search-form">
+        <input name="keyword" value="<c:out value="${keyword}" />" placeholder="搜索二手商品"/>
+        <input type="submit" value="搜索"/>
+    </form>
+    <p>共找到 ${goodsCount} 个结果</p>
+    <div class="goods-grid">
+        <c:forEach items="${goodsList}" var="goods">
+            <div class="goods-card">
+                <div class="goods-image-container">
+                    <img class="goods-image" src="<c:url value="/image?hash=${goods.imageHash}&mime=${goods.imageMime}" />"/>
+                    <c:if test="${goods.sold}">
+                        <div class="sold-overlay">
+                            <div class="sold-text">卖掉了~</div>
+                        </div>
+                    </c:if>
+                </div>
+                <div class="goods-info">
+                    <h2 class="goods-title"><a href="<c:url value="/goods/${goods.id}"/>"><c:out value="${goods.name}"/></a></h2>
+                    <p class="goods-price">￥<c:out value="${goods.price}"/></p>
+                    <p class="goods-desc"><c:out value="${goods.description}"/></p>
+                </div>
+            </div>
+        </c:forEach>
     </div>
-</c:forEach>
-<div>
-    <c:if test="${page > 1}">
-        <a href="<c:url value="/goods/">
-            <c:param name="keyword" value="${keyword}"/>
-            <c:param name="page" value="${page - 1}"/>
-        </c:url>">&lt; 上一页</a>
-    </c:if>
-    <c:forEach begin="1" end="${pageCount}" var="i">
-        <a href="<c:url value="/goods/">
-            <c:param name="keyword" value="${keyword}"/>
-            <c:param name="page" value="${i}"/>
-        </c:url>"
-           <c:if test="${i == page}">class="is-active"</c:if>
-        >${i}</a>
-    </c:forEach>
-    <c:if test="${page < pageCount}">
-        <a href="<c:url value="/goods/">
-            <c:param name="keyword" value="${keyword}"/>
-            <c:param name="page" value="${page + 1}"/>
-        </c:url>">下一页 &gt;</a>
-    </c:if>
+    <div class="pagination">
+        <c:if test="${page > 1}">
+            <a href="<c:url value="/goods/">
+                <c:param name="keyword" value="${keyword}"/>
+                <c:param name="page" value="${page - 1}"/>
+            </c:url>">&lt; 上一页</a>
+        </c:if>
+        <c:forEach begin="1" end="${pageCount}" var="i">
+            <a href="<c:url value="/goods/">
+                <c:param name="keyword" value="${keyword}"/>
+                <c:param name="page" value="${i}"/>
+            </c:url>"
+               <c:if test="${i == page}">class="is-active"</c:if>
+            >${i}</a>
+        </c:forEach>
+        <c:if test="${page < pageCount}">
+            <a href="<c:url value="/goods/">
+                <c:param name="keyword" value="${keyword}"/>
+                <c:param name="page" value="${page + 1}"/>
+            </c:url>">下一页 &gt;</a>
+        </c:if>
+    </div>
 </div>
 </body>
 </html>

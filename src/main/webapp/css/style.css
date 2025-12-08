@@ -1,0 +1,240 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Header */
+body > div:first-of-type {
+    background-color: #fff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #2c3e50;
+}
+
+a {
+    text-decoration: none;
+    color: #3498db;
+    margin-left: 1rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Goods List Grid */
+.goods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 1rem 0;
+}
+
+/* Goods Card */
+.goods-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.goods-card:hover {
+    transform: translateY(-5px);
+}
+
+.goods-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+}
+
+.goods-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sold-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    pointer-events: none; /* Allow clicking through if needed */
+}
+
+.sold-text {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transform: rotate(-45deg);
+    border: 2px solid white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.goods-info {
+    padding: 1rem;
+}
+
+.goods-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.goods-title a {
+    margin-left: 0;
+    color: #2c3e50;
+}
+
+.goods-price {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.goods-desc {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Forms */
+form {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search-form {
+    max-width: 100%;
+    box-shadow: none;
+    padding: 1rem 0;
+    background: transparent;
+    display: flex;
+    gap: 1rem;
+}
+
+.search-form input[type='text'],
+.search-form input:not([type='submit']) {
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+label span {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type='submit'],
+input[type='submit'] {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: auto;
+}
+
+button[type='submit']:hover,
+input[type='submit']:hover {
+    background-color: #2980b9;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.pagination a {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+    margin: 0;
+    background: #fff;
+}
+
+.pagination a.is-active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+/* Detail View */
+.detail-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.detail-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
