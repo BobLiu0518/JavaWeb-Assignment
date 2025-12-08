@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS goods (
 
 -   应用启动时（调用对应 Service 的构造函数）会执行 `CREATE TABLE IF NOT EXISTS ...`，无须手工创建表；但仍需事先创建数据库和数据库用户，并在容器中配置 JNDI DataSource。
 
-## 在 Tomcat 中配置 JNDI 数据源
+## 配置 JNDI
 
 将下面配置添加到 Tomcat 的 `conf/context.xml`（或部署的应用 `META-INF/context.xml`）：
 
@@ -77,6 +77,10 @@ CREATE TABLE IF NOT EXISTS goods (
           url="jdbc:postgresql://127.0.0.1:5432/assignment06"
           username="assignment06_user" password="your_password_here"
           maxTotal="20" maxIdle="10" maxWaitMillis="-1"/>
+<Environment name="imageStoragePath"
+             value="/path/to/image/storage"
+             type="java.lang.String"
+             override="false"/>
 ```
 
 ## 测试与账号说明
