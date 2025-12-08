@@ -26,7 +26,7 @@
         </label>
         <label>
             <span>图片：</span>
-            <input name="image" type="file" accept="image/*" required/>
+            <input name="image" type="file" accept="image/*"/>
         </label>
         <input name="id" value="${goods != null ? goods.id : 0}" type="hidden"/>
         <button type="submit">保存</button>
