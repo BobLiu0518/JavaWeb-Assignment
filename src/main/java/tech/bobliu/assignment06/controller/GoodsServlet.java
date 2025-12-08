@@ -46,7 +46,7 @@ public class GoodsServlet extends HttpServlet {
 
             ArrayList<Goods> goodsList = goodsService.queryGoodsList(keyword, page);
             int goodsCount = goodsService.getGoodsCount(keyword);
-            int pageCount = (int) Math.ceil((double) goodsCount / 10);
+            int pageCount = goodsService.getPageCount(goodsCount);
             request.setAttribute("goodsList", goodsList);
             request.setAttribute("goodsCount", goodsCount);
             request.setAttribute("pageCount", pageCount);

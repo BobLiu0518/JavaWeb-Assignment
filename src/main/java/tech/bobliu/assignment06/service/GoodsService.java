@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class GoodsService {
+    final int PAGE_SIZE = 12;
     GoodsDao goodsDao = new GoodsDaoImpl();
 
     public GoodsService() {
@@ -18,8 +19,12 @@ public class GoodsService {
         return goodsDao.getGoodsCount(keyword);
     }
 
+    public int getPageCount(int goodsCount) {
+        return (int) Math.ceil((double) goodsCount / PAGE_SIZE);
+    }
+
     public ArrayList<Goods> queryGoodsList(String keyword, int page) {
-        return goodsDao.queryGoods(keyword, 8, (page - 1) * 8);
+        return goodsDao.queryGoods(keyword, PAGE_SIZE, (page - 1) * PAGE_SIZE);
     }
 
     public Goods getGoodsById(int id) {
