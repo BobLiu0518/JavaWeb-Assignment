@@ -11,6 +11,7 @@ import tech.bobliu.assignment06.model.Goods;
 import tech.bobliu.assignment06.model.User;
 import tech.bobliu.assignment06.service.GoodsService;
 import tech.bobliu.assignment06.service.ImageService;
+import tech.bobliu.assignment06.service.UserService;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -25,6 +26,7 @@ import java.util.HexFormat;
         maxRequestSize = 1024 * 1024 * 12
 )
 public class GoodsServlet extends HttpServlet {
+    UserService userService = new UserService();
     GoodsService goodsService = new GoodsService();
     ImageService imageService = new ImageService();
 
@@ -57,7 +59,9 @@ public class GoodsServlet extends HttpServlet {
             // GET /goods/{id}?action=edit 编辑指定商品
             // GET /goods/?action=publish 发布新商品
             Goods goods = id == 0 ? null : goodsService.getGoodsById(id);
+            User publisher = goods == null || goods.getPublisherId() == 0 ? null : userService.getUserById(goods.getPublisherId());
             request.setAttribute("goods", goods);
+            request.setAttribute("publisher", publisher);
 
             if (action.equals("view")) {
                 request.getServletContext().getRequestDispatcher("/goodsView.jsp").forward(request, response);

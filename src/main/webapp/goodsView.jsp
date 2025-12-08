@@ -25,6 +25,7 @@
     <img class="detail-image" src="<c:url value="/image/${goods.imageHash}" />"/>
     <h2><c:out value="${goods.name}"/></h2>
     <p class="goods-price<c:if test="${goods.sold}"> is-sold</c:if>">￥<c:out value="${goods.price}"/></p>
+    <p>发布者：<c:out value="${publisher.username}"/></p>
     <p class="goods-view-desc"><c:out value="${goods.description}"/></p>
 </div>
 </body>
