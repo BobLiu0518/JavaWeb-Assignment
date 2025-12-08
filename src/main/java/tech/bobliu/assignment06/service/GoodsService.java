@@ -19,7 +19,7 @@ public class GoodsService {
     }
 
     public ArrayList<Goods> queryGoodsList(String keyword, int page) {
-        return goodsDao.queryGoods(keyword, 10, (page - 1) * 10);
+        return goodsDao.queryGoods(keyword, 8, (page - 1) * 8);
     }
 
     public Goods getGoodsById(int id) {
