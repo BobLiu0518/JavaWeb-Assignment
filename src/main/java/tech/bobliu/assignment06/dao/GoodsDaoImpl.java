@@ -29,7 +29,6 @@ public class GoodsDaoImpl implements GoodsDao {
                         is_sold BOOLEAN DEFAULT FALSE,
                         publisher_id INT NOT NULL,
                         image_hash VARCHAR(255) DEFAULT NULL,
-                        image_mime VARCHAR(50) DEFAULT NULL,
                         FOREIGN KEY (publisher_id) REFERENCES users(id),
                         FOREIGN KEY (image_hash) REFERENCES images(hash)
                     )
@@ -84,7 +83,7 @@ public class GoodsDaoImpl implements GoodsDao {
     public ArrayList<Goods> queryGoods(String keyword, int limit, int offset) {
         try (Connection conn = Dao.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("""
-                    SELECT id, name, description, price, is_sold, publisher_id, image_hash, image_mime FROM goods
+                    SELECT id, name, description, price, is_sold, publisher_id, image_hash FROM goods
                     WHERE name ILIKE ? OR description ILIKE ?
                     ORDER BY is_sold ASC, id DESC
                     LIMIT ? OFFSET ?
