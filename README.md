@@ -9,8 +9,8 @@
 -   `controller`（Servlets）
     -   负责接收 HTTP 请求，调用对应的 Service，并将结果转发到 JSP。
 -   `service`（Services）
-    -   封装业务规则：`AuthService`（注册、登录、密码哈希校验）、`GoodsService`（商品分页查询、保存、删除）、`ImageService`（图片元信息持久化）。
-    -   构造函数中会调用对应 DAO 的表初始化方法（确保表存在）。
+    -   封装业务规则：`AuthService`（注册、登录、密码哈希校验）、`UserService`（获取用户信息）、`GoodsService`（商品分页查询、保存、删除）、`ImageService`（图片元信息持久化）。
+    -   构造函数中会调用需要的 DAO 的表初始化方法（确保表存在）。
 -   `dao`（DAOs）
     -   使用 JNDI `DataSource`（`java:comp/env/jdbc/pgsql`）获取数据库连接（见 `Dao.getConnection()`）。
     -   包含 SQL 建表与 CRUD 实现（使用 PostgreSQL 驱动）。
