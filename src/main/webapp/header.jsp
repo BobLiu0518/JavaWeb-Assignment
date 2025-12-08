@@ -6,9 +6,10 @@
     <c:if test="${user != null}">
         <span>欢迎，<c:out value="${user.username}"/>！</span>
         <a href="<c:url value="/goods/?action=publish" />">发布二手商品</a>
+        <a href="<c:url value="/auth/logout" />">登出</a>
     </c:if>
     <c:if test="${user == null}">
-        <a href="<c:url value="/login.jsp" />">登录</a>
-        <a href="<c:url value="/register.jsp" />">注册</a>
+        <a href="<c:url value="/auth/login" />">登录</a>
+        <a href="<c:url value="/auth/register" />">注册</a>
     </c:if>
 </div>

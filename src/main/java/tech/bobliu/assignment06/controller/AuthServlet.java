@@ -10,9 +10,23 @@ import tech.bobliu.assignment06.service.AuthService;
 
 import java.io.IOException;
 
-@WebServlet(name = "authServlet", value = "/api/auth/*", loadOnStartup = 1)
+@WebServlet(name = "authServlet", value = "/auth/*", loadOnStartup = 1)
 public class AuthServlet extends HttpServlet {
     AuthService authService = new AuthService();
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo.equals("/login")) {
+            request.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        } else if (pathInfo.equals("/register")) {
+            request.getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
+        } else if (pathInfo.equals("/logout")) {
+            request.getSession().invalidate();
+            request.setAttribute("message", "登出成功");
+            request.getServletContext().getRequestDispatcher("/success.jsp").forward(request, response);
+        }
+    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();

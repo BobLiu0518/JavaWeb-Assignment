@@ -11,7 +11,7 @@
 <c:import url="/header.jsp"/>
 <div class="container">
     <h1 style="text-align: center; margin-bottom: 1rem;">登录</h1>
-    <form action="<c:url value="/api/auth/login" />" method="POST">
+    <form action="<c:url value="/auth/login" />" method="POST">
         <label>
             <span>用户名：</span>
             <input name="username" required/>
