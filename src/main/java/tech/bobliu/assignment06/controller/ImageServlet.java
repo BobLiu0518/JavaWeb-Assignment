@@ -15,10 +15,7 @@ public class ImageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String hash = request.getPathInfo().replaceAll("^/(.+)$", "$1");
         String mime = imageService.getImageMimeByHash(hash);
-
-        String appPath = request.getServletContext().getRealPath("");
-        String filePath = appPath + File.separator + "uploads" + File.separator + hash;
-        File imageFile = new File(filePath);
+        File imageFile = new File(imageService.getImageFullPath(hash));
 
         OutputStream os = response.getOutputStream();
         if (hash.isEmpty() || mime == null || !mime.startsWith("image/") || !hash.matches("^[a-fA-F0-9]{32}$") || !imageFile.exists()) {

@@ -12,7 +12,6 @@ import tech.bobliu.assignment06.model.User;
 import tech.bobliu.assignment06.service.GoodsService;
 import tech.bobliu.assignment06.service.ImageService;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
@@ -110,12 +109,6 @@ public class GoodsServlet extends HttpServlet {
 
         String imageHash = null;
         String imageMime = null;
-        String appPath = request.getServletContext().getRealPath("");
-        String uploadPath = appPath + File.separator + "uploads";
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
 
         Part filePart = request.getPart("image");
         if (filePart != null && filePart.getSize() > 0) {
@@ -132,7 +125,7 @@ public class GoodsServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-            String filePath = uploadPath + File.separator + imageHash;
+            String filePath = imageService.getImageFullPath(imageHash);
             filePart.write(filePath);
         }
         if (imageHash != null && imageMime != null) {
