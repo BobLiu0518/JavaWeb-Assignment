@@ -10,7 +10,7 @@
 <body>
 <c:import url="/header.jsp"/>
 <div class="container" style="text-align: center; padding-top: 2rem;">
-    <h1 style="color: #e74c3c;">失败！</h1>
+    <h1 style="color: #e74c3c;">操作失败</h1>
     <p style="font-size: 1.2rem; margin: 1rem 0;">${message}</p>
     <div style="margin-top: 2rem;">
         <a href="javascript:history.back()" style="margin-right: 1rem;">返回上一页</a>

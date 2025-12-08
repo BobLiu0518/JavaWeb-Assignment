@@ -10,20 +10,21 @@
 <body>
 <c:import url="/header.jsp"/>
 <div class="container detail-container">
-    <h1>商品详情</h1>
-    <div style="margin-bottom: 1rem;">
-        <c:if test="${user != null && user.id == goods.publisherId}">
+    <h2 style="margin: 0 0 1rem;">商品详情</h2>
+    <c:if test="${user != null && user.id == goods.publisherId}">
+        <div style="margin-bottom: 1rem;">
+            <span>操作</span>
             <c:if test="${!goods.sold}">
                 <a href="<c:url value="/goods/${goods.id}?action=sold"/>">卖掉了</a>
                 <a href="<c:url value="/goods/${goods.id}?action=edit"/>">编辑</a>
             </c:if>
             <a href="<c:url value="/goods/${goods.id}?action=delete"/>" style="color: #e74c3c;">删除</a>
-        </c:if>
-    </div>
+        </div>
+    </c:if>
 
     <img class="detail-image" src="<c:url value="/image/${goods.imageHash}" />"/>
     <h2><c:out value="${goods.name}"/></h2>
-    <p class="goods-price">￥<c:out value="${goods.price}"/></p>
+    <p class="goods-price<c:if test="${goods.sold}"> is-sold</c:if>">￥<c:out value="${goods.price}"/></p>
     <p style="line-height: 1.6; color: #555;"><c:out value="${goods.description}"/></p>
 </div>
 </body>

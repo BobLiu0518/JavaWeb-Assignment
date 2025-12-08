@@ -14,10 +14,11 @@
         <input name="keyword" value="<c:out value="${keyword}" />" placeholder="搜索二手商品"/>
         <input type="submit" value="搜索"/>
     </form>
-    <p>共找到 ${goodsCount} 个结果</p>
+    <p>共找到 ${goodsCount} 个结果<c:if test="${keyword != null && !keyword.isEmpty()}"> <a
+            href="<c:url value="/goods/"/>">清空搜索</a></c:if></p>
     <div class="goods-grid">
         <c:forEach items="${goodsList}" var="goods">
-            <div class="goods-card">
+            <div class="goods-card" onclick="location.href='<c:url value="/goods/${goods.id}"/>'">
                 <div class="goods-image-container">
                     <img class="goods-image" src="<c:url value="/image/${goods.imageHash}" />"/>
                     <c:if test="${goods.sold}">
@@ -27,9 +28,10 @@
                     </c:if>
                 </div>
                 <div class="goods-info">
-                    <h2 class="goods-title"><a href="<c:url value="/goods/${goods.id}"/>"><c:out
-                            value="${goods.name}"/></a></h2>
-                    <p class="goods-price">￥<c:out value="${goods.price}"/></p>
+                    <h2 class="goods-title"><c:out
+                            value="${goods.name}"/></h2>
+                    <p class="goods-price<c:if test="${goods.sold}"> is-sold</c:if>">￥<c:out
+                            value="${goods.price}"/></p>
                     <p class="goods-desc"><c:out value="${goods.description}"/></p>
                 </div>
             </div>

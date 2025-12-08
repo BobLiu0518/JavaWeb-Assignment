@@ -20,7 +20,7 @@
             <span>密码：</span>
             <input name="password" type="password" required/>
         </label>
-        <button type="submit">Login</button>
+        <button type="submit">登录</button>
     </form>
 </div>
 </body>
