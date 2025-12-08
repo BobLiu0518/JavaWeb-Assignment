@@ -14,7 +14,7 @@ public class UserDaoImpl implements UserDao {
                     CREATE TABLE IF NOT EXISTS users (
                         id SERIAL PRIMARY KEY,
                         username VARCHAR(50) NOT NULL,
-                        passwordHash CHAR(60) NOT NULL,
+                        password_hash CHAR(60) NOT NULL,
                         UNIQUE(username)
                     )
                     """).execute();
@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
     public User getUserById(int id) {
         try (Connection conn = Dao.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("""
-                    SELECT id, username, passwordHash FROM users WHERE id = ?
+                    SELECT id, username, password_hash FROM users WHERE id = ?
                     """);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -36,7 +36,7 @@ public class UserDaoImpl implements UserDao {
             return new User(
                     rs.getInt("id"),
                     rs.getString("username"),
-                    rs.getString("passwordHash")
+                    rs.getString("password_hash")
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -47,7 +47,7 @@ public class UserDaoImpl implements UserDao {
     public User getUserByUsername(String username) {
         try (Connection conn = Dao.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("""
-                    SELECT id, username, passwordHash FROM users WHERE username = ?
+                    SELECT id, username, password_hash FROM users WHERE username = ?
                     """);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
@@ -57,7 +57,7 @@ public class UserDaoImpl implements UserDao {
             return new User(
                     rs.getInt("id"),
                     rs.getString("username"),
-                    rs.getString("passwordHash")
+                    rs.getString("password_hash")
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -67,7 +67,7 @@ public class UserDaoImpl implements UserDao {
     public void addUser(User user) {
         try (Connection conn = Dao.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("""
-                    INSERT INTO users (username, passwordHash) VALUES (?, ?)
+                    INSERT INTO users (username, password_hash) VALUES (?, ?)
                     """, PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPasswordHash());
