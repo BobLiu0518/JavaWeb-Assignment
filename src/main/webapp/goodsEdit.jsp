@@ -14,15 +14,17 @@
     <form action="#" method="POST" enctype="multipart/form-data">
         <label>
             <span>标题：</span>
-            <input name="name" value="<c:out value="${goods.name}" />" required/>
+            <input name="name" value="<c:out value="${goods.name}" />" placeholder="填写标题" required/>
         </label>
         <label>
             <span>描述：</span>
-            <textarea name="description" rows="5" required><c:out value="${goods.description}"/></textarea>
+            <textarea name="description" rows="5" placeholder="填写描述" required><c:out
+                    value="${goods.description}"/></textarea>
         </label>
         <label>
             <span>价格：</span>
-            <input name="price" value="<c:out value="${goods.price}" />" required/>
+            <input name="price" value="<c:out value="${goods.price}" />" type="number"
+                   placeholder="填写价格，小于 0 时将会显示为 ∞" required/>
         </label>
         <label>
             <span>图片：</span>

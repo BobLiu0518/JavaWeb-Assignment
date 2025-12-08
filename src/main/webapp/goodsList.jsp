@@ -31,7 +31,7 @@
                     <h2 class="goods-title"><c:out
                             value="${goods.name}"/></h2>
                     <p class="goods-price<c:if test="${goods.sold}"> is-sold</c:if>">￥<c:out
-                            value="${goods.price}"/></p>
+                            value="${goods.price >= 0 ? goods.price : \"∞\"}"/></p>
                     <p class="goods-desc"><c:out value="${goods.description}"/></p>
                 </div>
             </div>
