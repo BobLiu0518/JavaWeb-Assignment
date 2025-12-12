@@ -49,8 +49,8 @@ public class MessageServlet extends HttpServlet {
                 type = "unknown";
             }
 
-            String senderName = (m.getSenderId() == -1) ? "\u7cfb\u7edf" : UserService.getUserById(m.getSenderId()).getUsername();
-            String targetName = (m.getTargetId() == -1) ? "\u6240\u6709\u4eba" : UserService.getUserById(m.getTargetId()).getUsername();
+            String senderName = (m.getSenderId() == -1) ? "系统" : UserService.getUserById(m.getSenderId()).getUsername();
+            String targetName = (m.getTargetId() == -1) ? "所有人" : UserService.getUserById(m.getTargetId()).getUsername();
 
             return Map.of(
                     "id", m.getId(),
