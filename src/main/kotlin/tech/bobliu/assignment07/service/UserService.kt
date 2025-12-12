@@ -24,6 +24,10 @@ object UserService {
             onlineUsers[user.id] = user
         }
         MessageService.sendMessage("@${user.username} 已加入聊天室", -1, -1)
+        MessageService.sendMessage(
+            "当前在线用户：${
+                getOnlineUsers().joinToString(" ") { "@${it.username}" }
+            }", -1, -1)
 
         return user
     }
