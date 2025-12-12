@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet
 import jakarta.servlet.http.HttpServlet
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import tech.bobliu.assignment07.model.User
 import tech.bobliu.assignment07.service.UserService
 
 @WebServlet(name = "authServlet", value = ["/auth/*"])
@@ -19,10 +18,6 @@ class AuthServlet : HttpServlet() {
             }
 
             "/logout" -> {
-                val user = request.session.getAttribute("user") as User?
-                if (user != null) {
-                    request.session.removeAttribute("user")
-                }
                 response.sendRedirect("${request.contextPath}/user/login")
             }
         }

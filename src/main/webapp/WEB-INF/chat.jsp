@@ -81,7 +81,6 @@
     </div>
     <a href="<c:url value="/auth/logout" />">登出</a>
 </div>
-</h1>
 <p id="content"></p>
 <form id="action">
     <select id="targetSelect">
@@ -134,6 +133,7 @@
 
         msgInput.disabled = false;
         sendBtn.disabled = false;
+        msgInput.focus();
     };
 
     const getMessages = async () => {
