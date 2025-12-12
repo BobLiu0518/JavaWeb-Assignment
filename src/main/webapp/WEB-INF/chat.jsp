@@ -163,6 +163,15 @@
             await new Promise((resolve) => setTimeout(resolve, 0));
             content.scrollTo({ top: content.scrollHeight, behavior: 'smooth' });
         }
+
+        if (document.visibilityState !== 'visible') {
+            document.title = '【新消息】在线聊天室 Pro Plus Max Ultra';
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                    document.title = '在线聊天室 Pro Plus Max Ultra';
+                }
+            }, { once: true });
+        }
     }
 
     const getOnlineUsers = async () => {

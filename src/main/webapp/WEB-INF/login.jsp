@@ -44,7 +44,7 @@
 <div id="main">
     <h1>在线聊天室 <span class="tag">Pro Plus Max Ultra</span></h1>
     <div>
-        <label for="username">用户名</label>
+        <label for="username">用户名：</label>
         <input id="username" name="username" type="text" placeholder="请输入用户名" autocomplete="off" required/>
     </div>
     <button id="login">登录</button>
