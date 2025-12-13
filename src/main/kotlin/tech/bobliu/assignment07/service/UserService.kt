@@ -21,6 +21,7 @@ object UserService {
             }
         }
         synchronized(onlineUsers) {
+            require(!onlineUsers.containsKey(user.id)) { "用户 ${user.username} 已在聊天室中" }
             onlineUsers[user.id] = user
         }
         MessageService.sendMessage("@${user.username} 已加入聊天室", -1, -1)

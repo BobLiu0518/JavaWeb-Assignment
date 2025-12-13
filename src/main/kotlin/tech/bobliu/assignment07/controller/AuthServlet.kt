@@ -27,29 +27,25 @@ class AuthServlet : HttpServlet() {
         response.contentType = "application/json;charset=UTF-8"
 
         when (request.pathInfo) {
-            "/login" -> {
+            "/login" -> runCatching {
                 val body = gson.fromJson(request.reader, Map::class.java)
                 val username = body["username"] as String?
 
-                val error = when {
-                    username.isNullOrEmpty() -> "用户名为空"
-                    username.length < 4 -> "用户名至少 4 位"
-                    else -> null
-                }
+                require(!username.isNullOrEmpty()) { "用户名为空" }
+                require(username.length >= 4) { "用户名至少 4 位" }
 
-                error?.let {
-                    response.status = 400
-                    response.writer.write(gson.toJson(mapOf("status" to "error", "message" to it)))
-                    return
-                }
-
-                val user = UserService.loginAsUser(username!!)
+                val user = UserService.loginAsUser(username)
                 request.session.apply {
                     setAttribute("user", user)
                     maxInactiveInterval = 60
                 }
 
-                response.writer.write(gson.toJson(mapOf("status" to "success", "message" to "登录成功")))
+                "登录成功"
+            }.onSuccess { msg ->
+                response.writer.write(gson.toJson(mapOf("status" to "success", "message" to msg)))
+            }.onFailure { e ->
+                response.status = 400
+                response.writer.write(gson.toJson(mapOf("status" to "error", "message" to e.message)))
             }
         }
     }
