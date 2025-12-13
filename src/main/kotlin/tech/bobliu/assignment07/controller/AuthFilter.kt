@@ -12,7 +12,7 @@ import tech.bobliu.assignment07.service.UserService
 class AuthFilter : HttpFilter() {
     override fun doFilter(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         val user = request.session.getAttribute("user") as? User
-        if (user == null && request.servletPath != "/auth") {
+        if (user == null && request.servletPath in listOf("/chat", "/message")) {
             response.sendRedirect("${request.contextPath}/auth/login")
             return
         }
