@@ -18,7 +18,7 @@ class AuthServlet : HttpServlet() {
             }
 
             "/logout" -> {
-                response.sendRedirect("${request.contextPath}/user/login")
+                response.sendRedirect("${request.contextPath}/auth/login")
             }
         }
     }
