@@ -22,7 +22,7 @@ public class AuthServlet extends HttpServlet {
             if ("/login".equals(path)) {
                 request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             } else if ("/logout".equals(path)) {
-                response.sendRedirect(request.getContextPath() + "/user/login");
+                response.sendRedirect(request.getContextPath() + "/auth/login");
             }
         } catch (Exception e) {
             throw new IOException(e);
@@ -36,27 +36,22 @@ public class AuthServlet extends HttpServlet {
         try {
             String path = request.getPathInfo();
             if ("/login".equals(path)) {
-                Map body = gson.fromJson(request.getReader(), Map.class);
-                String username = (String) body.get("username");
+                try {
+                    Map body = gson.fromJson(request.getReader(), Map.class);
+                    String username = (String) body.get("username");
 
-                String error = null;
-                if (username == null || username.isEmpty()) {
-                    error = "用户名为空";
-                } else if (username.length() < 4) {
-                    error = "用户名至少 4 位";
-                }
+                    if (username == null || username.isEmpty()) throw new IllegalArgumentException("用户名为空");
+                    if (username.length() < 4) throw new IllegalArgumentException("用户名至少 4 位");
 
-                if (error != null) {
+                    User user = UserService.loginAsUser(username);
+                    request.getSession().setAttribute("user", user);
+                    request.getSession().setMaxInactiveInterval(60);
+
+                    response.getWriter().write(gson.toJson(Map.of("status", "success", "message", "登录成功")));
+                } catch (Exception e) {
                     response.setStatus(400);
-                    response.getWriter().write(gson.toJson(Map.of("status", "error", "message", error)));
-                    return;
+                    response.getWriter().write(gson.toJson(Map.of("status", "error", "message", e.getMessage())));
                 }
-
-                User user = UserService.loginAsUser(username);
-                request.getSession().setAttribute("user", user);
-                request.getSession().setMaxInactiveInterval(60);
-
-                response.getWriter().write(gson.toJson(Map.of("status", "success", "message", "登录成功")));
             }
         } catch (Exception e) {
             throw new IOException(e);

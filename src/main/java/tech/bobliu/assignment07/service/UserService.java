@@ -39,6 +39,9 @@ public class UserService {
             }
         }
         synchronized (onlineUsers) {
+            if (onlineUsers.containsKey(user.getId())) {
+                throw new IllegalArgumentException("用户 " + user.getUsername() + " 已在聊天室中");
+            }
             onlineUsers.put(user.getId(), user);
         }
 

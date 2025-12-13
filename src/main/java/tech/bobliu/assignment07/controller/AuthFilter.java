@@ -16,7 +16,7 @@ public class AuthFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null && !"/auth".equals(request.getServletPath())) {
+        if (user == null && ("/chat".equals(request.getServletPath()) || "/message".equals(request.getServletPath()))) {
             response.sendRedirect(request.getContextPath() + "/auth/login");
             return;
         }

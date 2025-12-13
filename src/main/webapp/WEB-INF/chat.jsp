@@ -107,6 +107,10 @@
         return response;
     }
 
+    const formatTime = new Intl.DateTimeFormat('zh-CN', {
+        dateStyle: 'short', timeStyle: 'medium'
+    }).format;
+
     const sendMessage = async (e) => {
         e.preventDefault();
 
@@ -152,7 +156,8 @@
                 privateOut: `[私聊] 你 → @\${message.targetName}:`,
                 unknown: '[未知]'
             }[message.type]
-            div.textContent = `\${sender} \${message.content}`;
+            const time = formatTime(new Date(message.timestamp));
+            div.textContent = `\${time} \${sender} \${message.content}`;
             div.classList.add('message');
             return div;
         };

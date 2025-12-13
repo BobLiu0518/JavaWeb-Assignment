@@ -59,7 +59,8 @@ public class MessageServlet extends HttpServlet {
                     "senderName", senderName,
                     "targetId", m.getTargetId(),
                     "targetName", targetName,
-                    "content", m.getContent()
+                    "content", m.getContent(),
+                    "timestamp", m.getTime().getTime()
             );
         }).collect(Collectors.toList());
 
