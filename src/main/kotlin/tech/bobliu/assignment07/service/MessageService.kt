@@ -1,6 +1,7 @@
 package tech.bobliu.assignment07.service
 
 import tech.bobliu.assignment07.model.Message
+import java.util.*
 
 object MessageService {
     private val messages: ArrayList<Message> = ArrayList()
@@ -15,6 +16,7 @@ object MessageService {
                 senderId = senderId,
                 targetId = targetId,
                 content = content,
+                time = Date()
             )
             messages.add(message)
             return message.id

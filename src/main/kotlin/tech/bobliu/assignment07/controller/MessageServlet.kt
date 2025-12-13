@@ -32,7 +32,8 @@ class MessageServlet : HttpServlet() {
                 "senderName" to if (it.senderId == -1) "系统" else UserService.getUserById(it.senderId).username,
                 "targetId" to it.targetId,
                 "targetName" to if (it.targetId == -1) "所有人" else UserService.getUserById(it.targetId).username,
-                "content" to it.content
+                "content" to it.content,
+                "timestamp" to it.time.time,
             )
         }
 
