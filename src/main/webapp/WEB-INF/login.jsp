@@ -31,7 +31,7 @@
             margin: 4px 0 0 4px;
         }
 
-        #main {
+        #loginForm {
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -41,19 +41,21 @@
     </style>
 </head>
 <body>
-<div id="main">
+<form id="loginForm">
     <h1>在线聊天室 <span class="tag">Pro Plus Max Ultra</span></h1>
     <div>
         <label for="username">用户名：</label>
         <input id="username" name="username" type="text" placeholder="请输入用户名" autocomplete="off" required/>
     </div>
-    <button id="login">登录</button>
-</div>
+    <input type="submit" value="登录"/>
+</form>
 <script>
-    const loginBtn = document.getElementById('login')
+    const loginForm = document.getElementById('loginForm')
     const usernameInput = document.getElementById('username')
 
-    const login = async () => {
+    const login = async (e) => {
+        e.preventDefault()
+
         const username = usernameInput.value.trim()
         const response = await fetch('<c:url value="/auth/login" />', {
             method: 'POST',
@@ -70,7 +72,7 @@
             alert('登录失败：' + result.message)
         }
     }
-    loginBtn.addEventListener('click', login)
+    loginForm.addEventListener('submit', login)
 </script>
 </body>
 </html>
