@@ -249,6 +249,10 @@ body {
     font-weight: 600;
 }
 
+.reply-content {
+    flex: 1;
+}
+
 .topbar {
     margin-bottom: 16px;
 }
