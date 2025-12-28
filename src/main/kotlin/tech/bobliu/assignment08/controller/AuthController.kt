@@ -63,7 +63,7 @@ class AuthController(private val userService: UserService) {
 
         try {
             userService.register(username, password)
-            return "redirect:/login"
+            return "redirect:/auth/login"
         } catch (e: IllegalArgumentException) {
             model.addAttribute("error", e.message)
             return "register"
