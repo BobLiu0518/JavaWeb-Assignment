@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>在线问答留言交互平台</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>在线问答留言交互平台</h1>
+        <div class="nav">
+            <div th:if="${user != null}">
+                <span class="welcome">你好，<span th:text="${user.username}">User</span></span>
+                <a class="btn" th:href="@{/auth/logout}">登出</a>
+            </div>
+            <div th:if="${user == null}">
+                <a class="btn" th:href="@{/auth/login}">登录</a>
+                <a class="btn btn-primary" th:href="@{/auth/register}">注册</a>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${user != null}">
+        <div class="card" id="new-thread">
+            <h3 class="thread-title">发布新问题</h3>
+            <form class="form" method="post" th:action="@{/threads}">
+                <div class="form-row">
+                    <label class="label" for="title">标题</label>
+                    <input class="input" id="title" name="title" required type="text"/>
+                </div>
+                <div class="form-row">
+                    <label class="label" for="content">内容</label>
+                    <textarea class="textarea" id="content" name="content" required></textarea>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-primary" type="submit">发布</button>
+                </div>
+            </form>
+        </div>
+        <hr class="divider"/>
+    </div>
+
+    <div class="card" th:each="thread : ${threads}">
+        <h3 class="thread-title">
+            <a th:href="@{/threads/{id}(id=${thread.id})}" th:text="${thread.title}">Thread Title</a>
+            <span class="notice" th:text="'#' + ${thread.id}">#1</span>
+        </h3>
+        <div class="thread-meta">
+            <span th:text="${thread.sender.username}">User</span>
+            <span>·</span>
+            <span th:text="${#dates.format(thread.datetime, 'yyyy-MM-dd HH:mm:ss')}">2023-01-01 12:00:00</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>在线问答留言交互平台</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body>
+<div class="container">
+    <div class="header topbar">
+        <h1>在线问答留言交互平台</h1>
+        <div class="nav">
+            <a class="footer-link" th:href="@{/threads}">返回主页</a>
+        </div>
+    </div>
+
+    <div class="card auth">
+        <h2>注册</h2>
+        <div class="notice" style="color: var(--danger); margin-bottom: 10px" th:if="${error}" th:text="${error}"></div>
+        <form class="form" method="post" th:action="@{/auth/register}">
+            <div class="form-row">
+                <label class="label" for="username">用户名</label>
+                <input class="input" id="username" name="username" placeholder="请填写用户名" required type="text"/>
+            </div>
+            <div class="form-row">
+                <label class="label" for="password">密码</label>
+                <input class="input" id="password" name="password" placeholder="请填写密码" required type="password"/>
+            </div>
+            <div class="form-row">
+                <label class="label" for="captcha">验证码</label>
+                <div class="captcha-input">
+                    <input class="input" id="captcha" name="captcha" placeholder="请填写右侧算式的结果" required
+                           type="text"/>
+                    <img class="captchaImg" height="36px" id="captchaImg" th:src="@{/captcha}"/>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn btn-primary" type="submit">注册</button>
+                <a class="footer-link" th:href="@{/auth/login}">已有账号？去登录</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    const captchaImg = document.getElementById('captchaImg');
+    captchaImg.addEventListener('click', () => {
+        captchaImg.src = `/captcha?t=${ Date.now() }`;
+    });
+</script>
+</body>
+</html>
