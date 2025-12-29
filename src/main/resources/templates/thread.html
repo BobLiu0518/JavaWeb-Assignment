@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${thread.title} + ' - 在线问答留言交互平台'">Thread Title - 在线问答留言交互平台</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>在线问答留言交互平台</h1>
+        <div class="nav">
+            <a class="footer-link" th:href="@{/threads}">返回列表</a>
+            <div th:if="${user != null}">
+                <span class="welcome">你好，<span th:text="${user.username}">User</span></span>
+                <a class="btn" th:href="@{/auth/logout}">登出</a>
+            </div>
+            <div th:if="${user == null}">
+                <a class="btn" th:href="@{/auth/login}">登录</a>
+                <a class="btn btn-primary" th:href="@{/auth/register}">注册</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 class="thread-title" th:text="${thread.title}">Thread Title</h2>
+        <div class="thread-meta">
+            <span th:text="${thread.sender.username}">User</span>
+            <span>·</span>
+            <span th:text="${#dates.format(thread.datetime, 'yyyy-MM-dd HH:mm:ss')}">2023-01-01 12:00:00</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="post" th:each="post : ${thread.posts}">
+            <div class="post-header">
+                <span th:text="${post.sender.username}">User</span>
+                <span>·</span>
+                <span th:text="${#dates.format(post.datetime, 'yyyy-MM-dd HH:mm:ss')}">2023-01-01 12:00:00</span>
+                <span th:text="'#' + ${post.id}">#1</span>
+                <button
+                        class="btn-link"
+                        onclick="replyTo(this.getAttribute('data-id'), this.getAttribute('data-username'), this.getAttribute('data-content'))"
+                        th:data-content="${post.content}"
+                        th:data-id="${post.id}"
+                        th:data-username="${post.sender.username}"
+                        th:if="${user != null}"
+                >
+                    回复
+                </button>
+            </div>
+            <div class="post-quote" th:if="${post.parent != null}">
+                回复 <span th:text="'#' + ${post.parent.id}">#1</span>:
+                <span th:text="${post.parent.content}">Content</span>
+            </div>
+            <div class="post-content" th:text="${post.content}">Content</div>
+            <hr class="divider" th:if="${!postStat.last}"/>
+        </div>
+    </div>
+
+    <div class="card" th:if="${user != null}">
+        <div class="reply-banner" id="reply-banner">
+            <span>回复 <span class="reply-target" id="reply-target"></span></span>
+            <span id="reply-content"></span>
+            <button class="btn-link" onclick="cancelReply()">取消</button>
+        </div>
+        <form class="form" method="post" th:action="@{/threads/{id}/reply(id=${thread.id})}">
+            <input id="replyTo" name="replyTo" type="hidden"/>
+            <div class="form-row">
+                <textarea class="textarea" id="content" name="content" placeholder="写下你的回复..."
+                          required></textarea>
+            </div>
+            <div class="actions">
+                <button class="btn btn-primary" type="submit">回复</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function replyTo(id, username, content) {
+        document.getElementById('replyTo').value = id;
+        document.getElementById('reply-target').innerText = `#${ id } ${ username }: `;
+        document.getElementById('reply-content').innerText = content.substring(0, 20) + (content.length > 20 ? '...' : '');
+        document.getElementById('reply-banner').classList.add('show');
+        document.getElementById('content').focus();
+    }
+
+    function cancelReply() {
+        document.getElementById('replyTo').value = '';
+        document.getElementById('reply-banner').classList.remove('show');
+    }
+</script>
+</body>
+</html>
